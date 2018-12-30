@@ -1,4 +1,4 @@
-package io.github.evolutionThroughCraft.service.knowledge;
+package io.github.evolutionThroughCraft.knowledge;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
