@@ -5,9 +5,11 @@
  */
 package io.github.evolutionThroughCraft.knowledge.rest;
 
-import io.github.evolutionThroughCraft.common.service.main.utils.ResourceUtility;
+import io.github.evolutionThroughCraft.common.arch.orchestrators.ContractOperation;
+import io.github.evolutionThroughCraft.knowledge.models.KnowledgeEntity;
 import io.github.evolutionThroughCraft.knowledge.models.KnowledgeForm;
 import io.github.evolutionThroughCraft.knowledge.repo.KnowledgeRepository;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,18 +18,16 @@ import org.springframework.stereotype.Component;
  * @author dwin
  */
 @Component
-public class UpdateContract extends CreateContract {
+@Getter
+public class UpdateOperation extends ContractOperation<KnowledgeForm, KnowledgeForm, UpdateContract> {
     
     @Autowired
     private KnowledgeRepository knowledgeRepo;
-    
+
     @Override
-    public void validate(KnowledgeForm form) {
-        // run create validations
-        super.validate(form);
-        // update specific validations
-        ResourceUtility.ensureResource(form.getKnowledgeId(), "Knowledge Id Missing");
-        ResourceUtility.ensureResource(form.getAnswer(), "Answer Missing");
-        ResourceUtility.ensureResource(knowledgeRepo.getOne(form.getKnowledgeId()), "Existing Record Missing");        
+    public KnowledgeForm perform(KnowledgeForm form) {
+        KnowledgeEntity entity = new KnowledgeEntity(form);
+        KnowledgeEntity saved = getKnowledgeRepo().save(entity);
+        return new KnowledgeForm(saved);
     }
 }

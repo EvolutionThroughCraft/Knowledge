@@ -20,6 +20,8 @@ public class CreateContract implements Contract<KnowledgeForm> {
     @Override
     public void validate(KnowledgeForm form) {
         ResourceUtility.ensureResource(form, "KnowledgeForm Missing");
-        
+        ResourceUtility.ensureResource(form.getQuestion(), "Question Missing");        
+        ResourceUtility.ensureResource(form.getCreateUser(), "CreateUser Missing");
+        ResourceUtility.ensureResource(form.getUpdateUser(), "UpdateUser Missing");
     }
 }

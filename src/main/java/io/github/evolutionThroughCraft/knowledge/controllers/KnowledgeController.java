@@ -6,9 +6,11 @@
 package io.github.evolutionThroughCraft.knowledge.controllers;
 
 import io.github.evolutionThroughCraft.common.service.main.routes.KnowledgeRoutes;
+import io.github.evolutionThroughCraft.common.service.main.utils.ResourceUtility;
 import io.github.evolutionThroughCraft.knowledge.models.KnowledgeForm;
 import io.github.evolutionThroughCraft.knowledge.repo.KnowledgeRepository;
 import io.github.evolutionThroughCraft.knowledge.rest.CreateOperation;
+import io.github.evolutionThroughCraft.knowledge.rest.UpdateOperation;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.Getter;
@@ -44,8 +46,8 @@ public class KnowledgeController implements KnowledgeRoutes {
 //    @Autowired
 //    private CheckUniqueOperation checkUniqueOperation;
     
-//    @Autowired
-//    private AddAnswerOperation addAnswerOperation;
+    @Autowired
+    private UpdateOperation addAnswerOperation;
     
     @GetMapping(GET_KNOWLEDGE_PATH)
     public List<KnowledgeForm> findMatching(@Valid @RequestBody KnowledgeForm form) {
@@ -64,6 +66,7 @@ public class KnowledgeController implements KnowledgeRoutes {
                                 @PathVariable(KNOWLEDGE_ID_VAR) Long id,
                                 @Valid @RequestBody KnowledgeForm form
     ) {
-        return null;
+        ResourceUtility.ensureIdsEqual(id, form.getKnowledgeId());
+        return addAnswerOperation.run(form);
     }
 }
