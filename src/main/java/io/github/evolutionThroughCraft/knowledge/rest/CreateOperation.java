@@ -24,6 +24,9 @@ public class CreateOperation extends ContractOperation<KnowledgeForm, KnowledgeF
     @Autowired
     private KnowledgeRepository knowledgeRepo;
     
+    @Autowired
+    private CreateContract contract;
+    
     @Override
     public KnowledgeForm perform(KnowledgeForm form) {
         KnowledgeEntity entity = new KnowledgeEntity(form);
